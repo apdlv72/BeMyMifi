@@ -1,0 +1,118 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/topLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/textViewAccessPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Access point:"
+        android:textSize="@dimen/text_med" />
+
+    <TextView
+        android:id="@+id/textViewMobileData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewAccessPoint"
+        android:layout_below="@+id/textViewAccessPoint"
+        android:text="Mobile data:"
+        android:textSize="@dimen/text_med" />
+
+    <Button
+        android:id="@+id/buttonEnableMifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewMobileData"
+        android:layout_below="@+id/textViewMobileData"
+        android:layout_marginTop="23dp"
+        android:text=" ON "
+        android:textSize="@dimen/text_huge" />
+
+    <Button
+        android:id="@+id/buttonDisableMifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonEnableMifi"
+        android:layout_alignBottom="@+id/buttonEnableMifi"
+        android:layout_alignParentRight="true"
+        android:text=" OFF "
+        android:textSize="@dimen/text_huge" />
+
+    <Button
+        android:id="@+id/buttonCheckCredits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        android:text="Check credit" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonEnableMifi"
+        android:layout_below="@+id/buttonEnableMifi"
+        android:layout_marginTop="16dp" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" 
+            android:layout_marginBottom="10dp" 
+            >
+
+            <TextView
+                android:id="@+id/labelTraffic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:layout_marginLeft="16dp"
+                android:textColor="#ffffff"
+                android:text="Out/in: " />
+
+            <TextView
+                android:id="@+id/textViewTraffic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_med"
+                android:gravity="top" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/labelClients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:layout_marginLeft="16dp"
+                android:textColor="#ffffff"
+                android:text="Clients:" />
+
+            <TextView
+                android:id="@+id/textViewClients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="10dp"
+                android:text=""
+                 />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>
