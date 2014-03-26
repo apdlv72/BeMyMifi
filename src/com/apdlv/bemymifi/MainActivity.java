@@ -45,10 +45,8 @@ import android.widget.TextView;
 
 import com.apdlv.bemifi.R;
 
-
 public class MainActivity extends Activity implements OnClickListener
 {
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -125,13 +123,14 @@ public class MainActivity extends Activity implements OnClickListener
 	onClick(mButtonDisableMifi);
     };
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-	// Inflate the menu; this adds items to the action bar if it is present.
-	//getMenuInflater().inflate(R.menu.main, menu);
-	return false;
-    }
+    
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu)
+//    {
+//	// Inflate the menu; this adds items to the action bar if it is present.
+//	//getMenuInflater().inflate(R.menu.main, menu);
+//	return false;
+//    }
 
     
     @Override
@@ -163,50 +162,39 @@ public class MainActivity extends Activity implements OnClickListener
     }
 
 
-    public void setCredit(String string)
-    {
-        //mTextviewCredits.setText(string);
-    }
-
-
     private class RxTxStats
     {
         private long mRx;
         private long mTx;
-        @SuppressWarnings("unused")
-        private long tRx;
-        @SuppressWarnings("unused")
-        private long tTx;
     
-        public RxTxStats(long mRx, long mTx, long tRx, long tTx)
+        public RxTxStats(long mRx, long mTx)
         {
             this.mRx = mRx; 
             this.mTx = mTx;
-            this.tRx = tRx;
-            this.tTx = tTx;
         }
     }
 
+    
     private class StatsThread extends Thread
     {
-        public boolean mContinue = true;
-        private long mLastLeasesRead = 0;
+        public   boolean mContinue       = true;
+        private long     mLastLeasesRead = 0;
         
         @Override
         public void run()
         {
             String clientsOld = "";
+            
             while (mContinue)
             {
         	long mobileRx = TrafficStats.getMobileRxBytes();
         	long mobileTx = TrafficStats.getMobileTxBytes();	    
-        	long totalRx  = TrafficStats.getTotalRxBytes();
-        	long totalTx  = TrafficStats.getTotalTxBytes();
-    
+        	//long totalRx  = TrafficStats.getTotalRxBytes();
+        	//long totalTx  = TrafficStats.getTotalTxBytes();    
         	//Log.d(TAG, "mobile: " + mobileRx + "/" + mobileTx);
         	//Log.d(TAG, "total:  " + totalRx  + "/" + totalTx);
     
-        	RxTxStats stats = new RxTxStats(mobileRx, mobileTx, totalRx, totalTx);
+        	RxTxStats stats = new RxTxStats(mobileRx, mobileTx); //, totalRx, totalTx);
         	Message msg = mHandler.obtainMessage(MSG_TRAFFIC, stats);
         	msg.sendToTarget();
     
@@ -317,13 +305,12 @@ public class MainActivity extends Activity implements OnClickListener
             return mIpToNameMap.get(ip);
         }
         
-        Map<String, String> mIpToNameMap = null; 
         
         protected String findDhcpClients()
         {
-            StringBuilder sb = new StringBuilder();
-            //int macCount = 0;
+            StringBuilder  sb = new StringBuilder();
             BufferedReader br = null;
+            
             try 
             {
         	br = new BufferedReader(new FileReader("/proc/net/arp"));
@@ -374,9 +361,9 @@ public class MainActivity extends Activity implements OnClickListener
             return sb.toString();
         }
     
+        private Map<String, String> mIpToNameMap = null; 
     }
 
-    private Boolean mLastMifiEnabled = null;
     
     private BroadcastReceiver networkStateReceiver = new BroadcastReceiver() 
     {
@@ -427,6 +414,7 @@ public class MainActivity extends Activity implements OnClickListener
         }
     };
 
+    
     private Handler mHandler = new Handler()
     {
         final long THRESHOLD = 1024*1024; // vibrate every megabyte
@@ -462,12 +450,6 @@ public class MainActivity extends Activity implements OnClickListener
     };
 
     
-//    private void clickSound()
-//    {
-//        if (mWithSound) mAudioManager.playSoundEffect(AudioManager.FX_KEY_CLICK);
-//    }
-
-    
     private void playSound(int mp3ResID)
     {
         if (!mWithSound) return;
@@ -476,6 +458,7 @@ public class MainActivity extends Activity implements OnClickListener
         mp.start();
     }
 
+    
     private boolean isWifiTetheringEnabled()
     {
 	Boolean tetheringEnabled = null;
@@ -502,33 +485,24 @@ public class MainActivity extends Activity implements OnClickListener
 	    e.printStackTrace();
         }
 
-	/*
-	Method[] methods = wifiManager.getClass().getDeclaredMethods();
-	for (Method method : methods) 
-	{
-	    Log.d(TAG, "found method: " + method);
-	}
-	*/
-	
 	return null!=tetheringEnabled && true==tetheringEnabled;
     }
     
     
     private void setMobileDataEnabled(Context context, boolean enabled) throws ClassNotFoundException, SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException 
     {
-	    final ConnectivityManager conman = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-	    final Class<?> conmanClass = Class.forName(conman.getClass().getName());
-	    final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
-	    iConnectivityManagerField.setAccessible(true);
-	    
-	    final Object iConnectivityManager = iConnectivityManagerField.get(conman);
-	    final Class<?> iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
-	    final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
-	    setMobileDataEnabledMethod.setAccessible(true);
+	final ConnectivityManager conman = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	final Class<?> conmanClass = Class.forName(conman.getClass().getName());
+	final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
+	iConnectivityManagerField.setAccessible(true);
 
-	    setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);	    
-	    
-	}
+	final Object iConnectivityManager = iConnectivityManagerField.get(conman);
+	final Class<?> iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
+	final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+	setMobileDataEnabledMethod.setAccessible(true);
+
+	setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);	    	   
+    }
     
     
     private void setWifiTetheringEnabled(boolean enable) 
@@ -569,9 +543,9 @@ public class MainActivity extends Activity implements OnClickListener
 		try 
 		{
 		    Method setWifiApEnabled = method;
-		    // do not pass netconfig because this will override e.g. security settings, pre shared key etc.
-//		    WifiConfiguration netConfig = new WifiConfiguration();
-//		    netConfig.SSID = "BertasAP";
+		    // Do not pass netconfig because this will override e.g. security settings, pre-shared key etc.
+                    // WifiConfiguration netConfig = new WifiConfiguration();
+                    // netConfig.SSID = "BertasAP";
 		    		    
 		    @SuppressWarnings("unused") // probably a Boolean
                     Object rc = setWifiApEnabled.invoke(wifiManager, null /*netConfig*/, enable);
@@ -593,8 +567,7 @@ public class MainActivity extends Activity implements OnClickListener
 
     private void requestAccountCredits()
     {   
-	// Guthaben aufladen: *104*AUFLADECODE#
-	
+	// Guthaben aufladen: *104*AUFLADECODE#	
 	//String encoded = "tel:" + Uri.encode("*#06#");
 	String encoded = "tel:*100" + Uri.encode("#");
 	startActivityForResult(new Intent("android.intent.action.CALL", Uri.parse(encoded)), 1);
@@ -614,6 +587,7 @@ public class MainActivity extends Activity implements OnClickListener
 
     private final static String TAG            = MainActivity.class.getSimpleName();
     
+    @SuppressWarnings("unused")
     private final static int    MP3_TICK       = R.raw.tick;
     private final static int    MP3_CONNECTION = R.raw.connection;
     private final static int    MP3_ENABLED    = R.raw.enabled;
@@ -640,5 +614,6 @@ public class MainActivity extends Activity implements OnClickListener
     
     private Vibrator     mVibrator;
     private AudioManager mAudioManager;
+    private Boolean      mLastMifiEnabled = null;
 
 }

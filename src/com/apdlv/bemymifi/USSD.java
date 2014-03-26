@@ -64,7 +64,7 @@ class USSD {
                                                      String[] v=line.split("\\): "); //doesn't need log information --> split with "): " separator
                                                      if (v.length>1)        msg+=v[1].replace(trimmsg, "").trim()+"\n";
                                                      
-                                                     mainActivity.setCredit("line");
+                                                     //mainActivity.setCredit("line");
                                                              
                                              }
                                      }

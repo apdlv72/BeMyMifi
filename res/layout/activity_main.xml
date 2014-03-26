@@ -13,7 +13,7 @@
         android:id="@+id/textViewAccessPoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Access point:"
+        android:text="@string/access_point_"
         android:textSize="@dimen/text_med" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewAccessPoint"
         android:layout_below="@+id/textViewAccessPoint"
-        android:text="Mobile data:"
+        android:text="@string/mobile_data_"
         android:textSize="@dimen/text_med" />
 
     <Button
@@ -32,7 +32,7 @@
         android:layout_alignLeft="@+id/textViewMobileData"
         android:layout_below="@+id/textViewMobileData"
         android:layout_marginTop="23dp"
-        android:text=" ON "
+        android:text="@string/_on_"
         android:textSize="@dimen/text_huge" />
 
     <Button
@@ -42,7 +42,7 @@
         android:layout_alignBaseline="@+id/buttonEnableMifi"
         android:layout_alignBottom="@+id/buttonEnableMifi"
         android:layout_alignParentRight="true"
-        android:text=" OFF "
+        android:text="@string/_off_"
         android:textSize="@dimen/text_huge" />
 
     <Button
@@ -52,7 +52,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="26dp"
-        android:text="Check credit" />
+        android:text="@string/check_credit" />
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
                 android:gravity="top"
                 android:layout_marginLeft="16dp"
                 android:textColor="#ffffff"
-                android:text="Out/in: " />
+                android:text="@string/out_in_" />
 
             <TextView
                 android:id="@+id/textViewTraffic"
@@ -101,7 +101,7 @@
                 android:gravity="top"
                 android:layout_marginLeft="16dp"
                 android:textColor="#ffffff"
-                android:text="Clients:" />
+                android:text="@string/clients_" />
 
             <TextView
                 android:id="@+id/textViewClients"
